@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { BiDollar } from 'react-icons/bi';
 import { MdSwapHoriz, MdArrowForward, MdWarning } from 'react-icons/md';
-import { setAmount, setExchangeRatesDate, setFromCurrency, setToCurrency, swapCurrencies, useGetExchangeRatesQuery } from '../store';
+import { setAmount, setExchangeRatesDate, setFromCurrency, setToCurrency, showNotification, swapCurrencies, useGetExchangeRatesQuery } from '../store';
 import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -34,6 +34,16 @@ function CurrencyPage() {
     `${exchangeRatesDate.year}-${(exchangeRatesDate.month).padStart(2, '0')}-${(exchangeRatesDate.day).padStart(2, '0')}` : '';
 
   const handleConvert = () => {
+    if (amount <= 0 || amount === '') {
+      dispatch(showNotification('Enter currency amount'));
+      return;
+    }
+
+    if (toCurrency === fromCurrency) {
+      dispatch(showNotification('Currencies must be different'));
+      return;
+    }
+
     setSearchParams({
       from: fromCurrency, to: toCurrency, amount, date: formatedDate
     });

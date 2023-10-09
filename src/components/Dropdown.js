@@ -67,7 +67,7 @@ function Dropdown({ value, onChange, options, alignRight }) {
           <input className="grow bg-[transparent] outline-none border-b-2 border-neutral-3 duration-200 placeholder:text-neutral-3 focus:border-secondary-main"
             value={searchTerm} onInput={(event) => setSearchTerm(event.target.value)} type="text" placeholder="Search for currencies ..." />
         </div>
-        <div className="relative max-h-60 overflow-auto rounded-b-2xl shadow-lg">
+        <div className="relative max-h-60 overflow-auto rounded-b-2xl shadow-md shadow-neutral-2">
           {renderedOptions}
           {renderedOptions.length > 6 &&
             <div className="fixed bottom-0 w-full h-7 bg-gradient-to-t from-neutral-3 rounded-b-2xl"></div>}
