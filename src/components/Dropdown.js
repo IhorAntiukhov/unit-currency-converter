@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import classNames from 'classnames';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdSearch } from 'react-icons/md';
 
-function Dropdown({ value, onChange, options, alignRight }) {
+function Dropdown({ value, onChange, options, alignRight, units }) {
   const [isOpen, setIsOpen] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -41,8 +41,8 @@ function Dropdown({ value, onChange, options, alignRight }) {
 
   const dropdownClass = classNames('relative', { 'flex flex-col items-end': alignRight });
   const currentValueClass = classNames(
-    'flex', 'justify-between', 'w-full', 'space-x-2', 'px-3', 'py-2', 'rounded-full', 'duration-200',
-    { 'bg-neutral-4': isOpen === 2, 'bg-neutral-2': isOpen !== 2 });
+    'flex', 'justify-between', 'items-center', 'h-full', 'space-x-2', 'px-3', 'py-2', 'rounded-full', 'duration-200',
+    { 'bg-neutral-4': isOpen === 2, 'bg-neutral-2': isOpen !== 2, 'w-[6.25rem]': units, 'w-full': !units });
 
   const optionsClass = classNames(
     'absolute', 'z-10', 'mt-12',
@@ -65,7 +65,8 @@ function Dropdown({ value, onChange, options, alignRight }) {
         <div className="flex space-x-2 px-3 py-2 bg-neutral-2 rounded-t-2xl">
           <MdSearch className="w-6 h-6" />
           <input className="grow bg-[transparent] outline-none border-b-2 border-neutral-3 duration-200 placeholder:text-neutral-3 focus:border-secondary-main"
-            value={searchTerm} onInput={(event) => setSearchTerm(event.target.value)} type="text" placeholder="Search for currencies ..." />
+            value={searchTerm} onInput={(event) => setSearchTerm(event.target.value)} type="text"
+            placeholder={(units) ? 'Search for units ...' : "Search for currencies ..."} />
         </div>
         <div className="relative max-h-60 overflow-auto rounded-b-2xl shadow-md shadow-neutral-2">
           {renderedOptions}

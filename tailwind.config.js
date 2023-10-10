@@ -24,6 +24,7 @@ module.exports = {
       'close-dropdown': 'closeDropdown 0.3s ease-out 0s 1 normal forwards',
       'show-notification': 'showNotification 0.3s ease-out 0s 1 normal forwards',
       'hide-notification': 'hideNotification 0.3s ease-out 0s 1 normal forwards',
+      'flip-button': 'flipButton 0.6s ease-out 0s 1 normal forwards',
     },
     extend: {
       keyframes: {
@@ -62,6 +63,14 @@ module.exports = {
           },
           '100%': {
             opacity: '0'
+          }
+        },
+        flipButton: {
+          '0%': {
+            transform: 'rotate3d(1, 0, 0, 0deg)'
+          },
+          '100%': {
+            transform: 'rotate3d(1, 0, 0, 360deg)'
           }
         }
       }
