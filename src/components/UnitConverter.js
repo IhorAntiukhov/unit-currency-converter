@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { MdSwapHoriz } from 'react-icons/md';
 import Input from './Input';
 import Dropdown from './Dropdown';
 import converters from '../converters';
+import { addConversion } from '../store';
 
 function UnitConverter() {
   const { converter } = useParams();
@@ -15,11 +17,28 @@ function UnitConverter() {
     toUnit: converters[converter].default,
     accurate: false
   });
+
+  const dispatch = useDispatch();
   const [flipButton, setFlipButton] = useState(false);
 
   const toFixed = (number) => {
-    if (searchParams.get('accurate') === 'false') return parseFloat(number.toFixed(3))
+    if (searchParams.get('accurate') !== 'true') return parseFloat(number.toFixed(3))
     return number;
+  }
+
+  const saveToHistory = (from, to, fromUnit, toUnit) => {
+    const now = new Date();
+    const result = `${from} ${fromUnit} = ${to} ${toUnit}`;
+    const searchParamsLink = `from=${from}&to=${to}&fromUnit=${fromUnit}&toUnit=${toUnit}`;
+
+    dispatch(addConversion(
+      {
+        converter: converter[0].toUpperCase() + converter.slice(1),
+        date: now.getTime(),
+        result,
+        link: `/units/${converter}?${searchParamsLink}`
+      }
+    ));
   }
 
   const swapUnits = () => {
@@ -39,6 +58,7 @@ function UnitConverter() {
       toUnit: searchParams.get('fromUnit'),
       to
     });
+    saveToHistory(searchParams.get('from'), to, searchParams.get('toUnit'), searchParams.get('fromUnit'));
   }
 
   const toggleAccuracy = () => {
@@ -66,6 +86,7 @@ function UnitConverter() {
       from: text,
       to: result
     });
+    saveToHistory(text, result, searchParams.get('fromUnit'), searchParams.get('toUnit'));
   }
 
   const changeFirstUnit = (unit) => {
@@ -84,6 +105,7 @@ function UnitConverter() {
       fromUnit: unit,
       to: result
     });
+    saveToHistory(searchParams.get('fromUnit'), result, unit, searchParams.get('toUnit'));
   }
 
   const convertSecondUnit = (text) => {
@@ -101,6 +123,7 @@ function UnitConverter() {
       to: text,
       from: result
     });
+    saveToHistory(result, text, searchParams.get('fromUnit'), searchParams.get('toUnit'));
   }
 
   const changeSecondUnit = (unit) => {
@@ -119,6 +142,7 @@ function UnitConverter() {
       toUnit: unit,
       to: result
     });
+    saveToHistory(searchParams.get('from'), result, searchParams.get('fromUnit'), unit);
   }
 
   const buttonClass = classNames('px-3', 'py-2', 'bg-neutral-2', 'rounded-full',
