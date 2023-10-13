@@ -21,10 +21,11 @@ function HistoryConvertion({ converter, date, result, link }) {
       addOrRemove: !selectedConversions.includes(date),
       date,
     }));
-  }
+  };
 
   const conversionClass = classNames(
-    'flex', 'flex-col', 'space-y-0', 'px-4', 'py-1', 'space-y-1', 'rounded-[1rem]', 'shadow-md', 'shadow-neutral-2', 'duration-200',
+    'flex', 'flex-col', 'space-y-0', 'px-4', 'py-1', 'space-y-1', 'rounded-[1rem]',
+    'shadow-md', 'shadow-neutral-2', 'cursor-pointer', 'duration-200', 'hover:opacity-80', 'dark:shadow-neutral-dark-3',
     { 'bg-neutral-4': !selectedConversions.includes(date), 'bg-secondary-main': selectedConversions.includes(date) });
   const linkClass = classNames('p-2', 'rounded-full', 'duration-200',
     { 'bg-neutral-2': !selectedConversions.includes(date), 'bg-secondary-darker': selectedConversions.includes(date) });

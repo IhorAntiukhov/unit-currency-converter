@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { BiDollar } from 'react-icons/bi';
 import { MdSwapHoriz, MdArrowForward, MdWarning } from 'react-icons/md';
+import classNames from 'classnames';
 import { addConversion, setAmount, setExchangeRatesDate, setFromCurrency, setToCurrency, showNotification, swapCurrencies, useGetExchangeRatesQuery } from '../store';
 import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
@@ -83,11 +84,18 @@ function CurrencyPage() {
 
       setTimeout(() => dispatch(addConversion(conversion)), 500);
     }
-  }, [searchParams, dispatch, result])
+  }, [searchParams, dispatch, result]);
+
+  const pageClass = classNames(
+    'px-4', 'py-10', 'sm:p-16',
+    'md:w-[50vw]', 'md:h-[50vh]', 'md:p-0', 'md:rounded-b-[1.125rem]', 'md:bg-[white]',
+    'md:shadow-lg', 'md:shadow-neutral-2', 'md:dark:bg-neutral-dark-2', 'md:dark:shadow-neutral-dark-3',
+    'lg:w-[45vw]', 'lg:h-[45vh]', 'xl:w-[30vw]', 'xl:h-[70vh]');
 
   return (
-    <div className="px-4 py-10">
-      <div className="p-4 rounded-2xl shadow-md">
+    <div className={pageClass}>
+      <div className="hidden md:block md:shadow-lg md:shadow-neutral-2 md:h-4 md:-mt-4 md:dark:hidden"></div>
+      <div className="p-4 rounded-2xl shadow-md md:w-full md:py-10 md:shadow-none dark:bg-neutral-dark-2 dark:shadow-neutral-dark-3">
         <p className="-mx-4 mb-5 pb-2 text-lg text-center font-bold border-b-[1.5px] border-neutral-2">
           {(searchParams.has('amount')) ?
             result : <span className="text-neutral-3">Currency not converted</span>}
@@ -99,7 +107,7 @@ function CurrencyPage() {
 
         <div className="grid grid-cols-[1fr_auto_1fr] gap-2 mt-2 mb-4">
           <Dropdown value={fromCurrency} onChange={(currency) => dispatch(setFromCurrency(currency))} options={CURRENCIES} />
-          <button className="p-2 bg-neutral-2 rounded-full" onClick={() => dispatch(swapCurrencies())}>
+          <button className="p-2 bg-neutral-2 rounded-full duration-200 hover:opacity-80" onClick={() => dispatch(swapCurrencies())}>
             <MdSwapHoriz className="w-6 h-6" />
           </button>
           <Dropdown value={toCurrency} onChange={(currency) => dispatch(setToCurrency(currency))} options={CURRENCIES} alignRight />

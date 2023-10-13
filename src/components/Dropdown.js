@@ -30,7 +30,7 @@ function Dropdown({ value, onChange, options, alignRight, units }) {
     }
 
     return filteredOptions.map((currency) => {
-      const optionClass = classNames('px-3', 'py-2', 'border-b-[1.5px]', 'border-neutral-3', 'last:border-b-0',
+      const optionClass = classNames('px-3', 'py-2', 'border-b-[1.5px]', 'border-neutral-3', 'last:border-b-0', 'hover:bg-neutral-4',
         { 'bg-neutral-4': value === currency[0], 'bg-neutral-2': value !== currency[0] });
 
       return <div className={optionClass} key={currency[0]} onClick={() => handleOptionClick(currency)}>
@@ -39,20 +39,19 @@ function Dropdown({ value, onChange, options, alignRight, units }) {
     });
   }, [searchTerm, onChange, options, value]);
 
-  const dropdownClass = classNames('relative', { 'flex flex-col items-end': alignRight });
+  const dropdownClass = classNames('relative', 'cursor-pointer', 'dropdown', { 'flex flex-col items-end': alignRight });
   const currentValueClass = classNames(
-    'flex', 'justify-between', 'items-center', 'h-full', 'space-x-2', 'px-3', 'py-2', 'rounded-full', 'duration-200',
+    'flex', 'justify-between', 'items-center', 'h-full', 'space-x-2', 'px-3', 'py-2', 'rounded-full', 'duration-200', 'hover:bg-neutral-4',
     { 'bg-neutral-4': isOpen === 2, 'bg-neutral-2': isOpen !== 2, 'w-[6.25rem]': units, 'w-full': !units });
 
   const optionsClass = classNames(
-    'absolute', 'z-10', 'mt-12',
+    'absolute', 'z-20', 'mt-12',
     {
       'mt-12': alignRight, 'mt-2': !alignRight,
       'origin-top-right': alignRight, 'origin-top-left': !alignRight,
       'animate-open-dropdown': isOpen === 2, 'animate-close-dropdown': isOpen === 1,
       'hidden': isOpen === 0
-    }
-  );
+    });
 
   return (
     <div className={dropdownClass} ref={dropdownEl}>
@@ -64,11 +63,12 @@ function Dropdown({ value, onChange, options, alignRight, units }) {
       <div className={optionsClass}>
         <div className="flex space-x-2 px-3 py-2 bg-neutral-2 rounded-t-2xl">
           <MdSearch className="w-6 h-6" />
-          <input className="grow bg-[transparent] outline-none border-b-2 border-neutral-3 duration-200 placeholder:text-neutral-3 focus:border-secondary-main"
+          <input className=
+            "grow bg-[transparent] outline-none border-b-2 border-neutral-3 duration-200 placeholder:text-neutral-3 focus:border-secondary-main"
             value={searchTerm} onInput={(event) => setSearchTerm(event.target.value)} type="text"
             placeholder={(units) ? 'Search for units ...' : "Search for currencies ..."} />
         </div>
-        <div className="relative max-h-60 overflow-auto rounded-b-2xl shadow-md shadow-neutral-2">
+        <div className="relative max-h-60 overflow-auto rounded-b-2xl shadow-md shadow-neutral-2 dark:shadow-neutral-dark-3">
           {renderedOptions}
           {renderedOptions.length > 6 &&
             <div className="fixed bottom-0 w-full h-7 bg-gradient-to-t from-neutral-3 rounded-b-2xl"></div>}

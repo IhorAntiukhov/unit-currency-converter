@@ -5,3 +5,42 @@
 #root {
   height: 100%;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+.dropdown ::-webkit-scrollbar-track {
+  background-color: #C8CCCC;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  background-color: #A2A6A6;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #878c8c;
+}
+
+.waves {
+  background-image: url('./svg/wave.svg');
+  background-repeat: no-repeat;
+}
+

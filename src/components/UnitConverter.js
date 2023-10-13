@@ -145,13 +145,14 @@ function UnitConverter() {
     saveToHistory(searchParams.get('from'), result, searchParams.get('fromUnit'), unit);
   }
 
-  const buttonClass = classNames('px-3', 'py-2', 'bg-neutral-2', 'rounded-full',
+  const buttonClass = classNames(
+    'px-3', 'py-2', 'bg-neutral-2', 'rounded-full', 'duration-200', 'hover:opacity-80',
     { 'animate-flip-button': flipButton });
 
   return (
-    <div className="flex flex-col space-y-2 -mx-4 px-4 pb-4 border-b-[1.5px] border-neutral-2">
-      <div className="flex justify-center space-x-2">
-        <button className="p-2 bg-neutral-2 rounded-full" onClick={swapUnits}>
+    <div className="flex flex-col space-y-2 -mx-4 px-4 pb-4 border-b-[1.5px] border-neutral-2 sm:-mx-16 sm:px-16 md:-mx-4 md:px-4">
+      <div className="flex justify-center items-center space-x-2">
+        <button className="p-2 bg-neutral-2 rounded-full duration-200 hover:opacity-80" onClick={swapUnits}>
           <MdSwapHoriz className="w-6 h-6" />
         </button>
 

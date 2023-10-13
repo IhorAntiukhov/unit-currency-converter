@@ -25,8 +25,8 @@ function ConvertersLayout() {
 
   const linkClass = classNames(
     'flex', 'flex-col', 'justify-center', 'items-center', 'space-y-3', 'aspect-square',
-    'bg-gradient-to-b', 'from-neutral-2', 'to-neutral-4', 'rounded-xl', 'shadow-md', 'shadow-neutral-2'
-  );
+    'bg-gradient-to-b', 'from-neutral-2', 'to-neutral-4', 'rounded-xl', 'shadow-md', 'shadow-neutral-2',
+    'duration-200', 'hover:opacity-80', 'dark:shadow-neutral-dark-3');
 
   const renderedLinks = converters.map((converter) => (
     <Link to={`/units/${converter.name.toLowerCase()}`} key={converter.name}>
@@ -37,10 +37,17 @@ function ConvertersLayout() {
     </Link>
   ));
 
+  const pageClass = classNames(
+    'px-4', 'py-10', 'space-y-4', 'sm:p-16',
+    'md:w-[50vw]', 'md:h-[50vh]', 'md:px-4', 'md:py-10', 'md:overflow-auto', 'md:bg-[white]',
+    'md:rounded-b-[1.125rem]', 'md:shadow-lg', 'md:shadow-neutral-2', 'md:dark:bg-neutral-dark-2', 'md:dark:shadow-neutral-dark-3',
+    'lg:w-[45vw]', 'lg:h-[45vh]', 'xl:w-[30vw]', 'xl:h-[70vh]');
+
   return (
-    <div className="px-4 py-10 space-y-4">
+    <div className={pageClass}>
+      <div className="hidden md:block md:shadow-lg md:shadow-neutral-2 md:h-4 md:-mt-14 md:mb-14 md:dark:hidden"></div>
       <Outlet />
-      <div className="grid grid-cols-[repeat(auto-fill,_minmax(6.8rem,_1fr))] gap-3">
+      <div className="grid grid-cols-[repeat(auto-fill,_minmax(6.6rem,_1fr))] justify-center gap-3">
         {renderedLinks}
       </div>
     </div>

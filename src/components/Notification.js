@@ -16,7 +16,7 @@ function Notification({ index, text }) {
   }, [dispatch, index]);
 
   const notificationClass = classNames(
-    'flex', 'items-center', 'space-x-2', 'px-5', 'py-2', 'bg-error', 'rounded-full', 'shadow-md', 'shadow-neutral-3',
+    'flex', 'items-center', 'space-x-2', 'px-5', 'py-2', 'bg-error', 'rounded-full', 'shadow-md', 'shadow-neutral-3', 'dark:shadow-neutral-dark-3',
     {
       'animate-hide-notification': fadingNotifications.includes(index),
       'animate-show-notification': !fadingNotifications.includes(index)
@@ -32,7 +32,7 @@ function Notification({ index, text }) {
     <div className={notificationClass}>
       <Icon src={<MdWarning className="w-6 h-6" />} color="white" />
       <p className="text-[white]">{text}</p>
-      <Icon src={<MdClose className="w-6 h-6" onClick={() => dispatch(startNotificationFading(index))} />} color="white" />
+      <Icon src={<MdClose className="w-6 h-6 cursor-pointer" onClick={() => dispatch(startNotificationFading(index))} />} color="white" />
     </div>
   );
 }
