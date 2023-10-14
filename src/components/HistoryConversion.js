@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdArrowForward } from 'react-icons/md';
 import { toggleSelectedConversion } from '../store';
 import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 
 function HistoryConvertion({ converter, date, result, link }) {
   const dispatch = useDispatch();
   const selectedConversions = useSelector((state) => state.historyReducer.selectedConversions);
+  const conversionRef = useRef();
 
   const conversionDate = new Date(date);
 
@@ -16,12 +18,23 @@ function HistoryConvertion({ converter, date, result, link }) {
   const formattedDay = String(conversionDate.getDay()).padStart(2, '0');
   const formattedMonth = String(conversionDate.getMonth()).padStart(2, '0');
 
-  const toggleSelection = () => {
-    dispatch(toggleSelectedConversion({
-      addOrRemove: !selectedConversions.includes(date),
-      date,
-    }));
-  };
+  useEffect(() => {
+    const el = conversionRef.current;
+
+    const toggleSelection = (event) => {
+      if (!event.target.closest('a')) {
+        dispatch(toggleSelectedConversion({
+          addOrRemove: !selectedConversions.includes(date),
+          date,
+        }));
+      }
+    };
+    if (el) conversionRef.current.addEventListener('click', toggleSelection);
+
+    return () => {
+      if (el) el.removeEventListener('click', toggleSelection);
+    }
+  }, [date, dispatch, selectedConversions]);
 
   const conversionClass = classNames(
     'flex', 'flex-col', 'space-y-0', 'px-4', 'py-1', 'space-y-1', 'rounded-[1rem]',
@@ -31,7 +44,7 @@ function HistoryConvertion({ converter, date, result, link }) {
     { 'bg-neutral-2': !selectedConversions.includes(date), 'bg-secondary-darker': selectedConversions.includes(date) });
 
   return (
-    <div className={conversionClass} onClick={toggleSelection}>
+    <div className={conversionClass} ref={conversionRef}>
       <div className="flex justify-between items-center space-x-2">
         <p className="font-bold">{converter}</p>
         <p>{formattedHours}:{formattedMinutes} {formattedDay}.{formattedMonth}.{conversionDate.getFullYear()}</p>

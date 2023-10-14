@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router-dom';
 import { FaRuler, FaWeightHanging } from 'react-icons/fa';
-import { FaTemperatureHalf, FaClock, FaDatabase, FaBolt } from 'react-icons/fa6';
+import { FaTemperatureHalf, FaClock, FaDatabase, FaCube } from 'react-icons/fa6';
 import { LuMoveDiagonal } from 'react-icons/lu';
 import { WiBarometer } from 'react-icons/wi';
 import { IoSpeedometer } from 'react-icons/io5';
@@ -19,8 +19,8 @@ function ConvertersLayout() {
     },
     { name: 'Time', icon: <FaClock className="w-8 h-8" /> },
     { name: 'Speed', icon: <IoSpeedometer className="w-8 h-8" /> },
+    { name: 'Volume', icon: <FaCube className="w-8 h-8" /> },
     { name: 'Data', icon: <FaDatabase className="w-8 h-8" /> },
-    { name: 'Voltage', icon: <FaBolt className="w-8 h-8" /> },
   ];
 
   const linkClass = classNames(

@@ -2,12 +2,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import HistoryConvertion from '../components/HistoryConversion';
 import { MdDelete } from 'react-icons/md';
 import classNames from 'classnames';
-import { deleteSelectedConversions, toggleAllSelectedConversions } from '../store';
+import { deleteSelectedConversions, showNotification, toggleAllSelectedConversions } from '../store';
 import Button from '../components/Button';
 
 function HistoryPage() {
   const dispatch = useDispatch();
   const { allConversions, selectedConversions } = useSelector((state) => state.historyReducer);
+
+  const deleteConversions = () => {
+    if (selectedConversions.length === 0) {
+      dispatch(showNotification('You have not selected any conversion'));
+      return;
+    }
+
+    dispatch(deleteSelectedConversions());
+  };
 
   const renderedConversions = allConversions.toReversed().map((conversion) =>
     <HistoryConvertion key={conversion.date} converter={conversion.converter}
@@ -34,7 +43,7 @@ function HistoryPage() {
               <span>{(selectedConversions.length === 0) ? 'Select all' : 'Deselect all'}</span>
             </Button>
 
-            <button className="p-2 bg-neutral-2 rounded-full duration-200 hover:opacity-80" onClick={() => dispatch(deleteSelectedConversions())}>
+            <button className="p-2 bg-neutral-2 rounded-full duration-200 hover:opacity-80" onClick={deleteConversions}>
               <MdDelete className="w-6 h-6" />
             </button>
           </div>

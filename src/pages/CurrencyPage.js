@@ -101,7 +101,7 @@ function CurrencyPage() {
             result : <span className="text-neutral-3">Currency not converted</span>}
         </p>
 
-        <Input value={amount} onChange={(text) => dispatch(setAmount(text))}
+        <Input value={amount} onChange={(text) => dispatch(setAmount(text))} onSubmit={convertCurrencies}
           type="number" placeholder="Enter amount ..." icon={<BiDollar className="w-6 h-6" />} />
         <SeparatedInput />
 

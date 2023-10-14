@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdClose, MdWarning } from 'react-icons/md';
+import classNames from 'classnames';
 import { removeNotification, startNotificationFading } from '../store';
 import Icon from './Icon';
-import classNames from 'classnames';
-import { useEffect } from 'react';
 
 function Notification({ index, text }) {
   const dispatch = useDispatch();

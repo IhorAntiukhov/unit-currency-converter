@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
@@ -7,26 +7,36 @@ import Input from './Input';
 import Dropdown from './Dropdown';
 import converters from '../converters';
 import { addConversion } from '../store';
+import useCompare from '../hooks/useCompare';
 
 function UnitConverter() {
   const { converter } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams({
-    to: 0,
-    from: 0,
-    fromUnit: converters[converter].default,
-    toUnit: converters[converter].default,
-    accurate: false
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useDispatch();
   const [flipButton, setFlipButton] = useState(false);
 
+  const converterChanged = useCompare(converter);
+  useEffect(() => {
+    if (converterChanged && !searchParams.has('from')) {
+      setSearchParams({
+        to: 0,
+        from: 0,
+        fromUnit: converters[converter].default,
+        toUnit: converters[converter].default,
+        accurate: false
+      });
+    }
+  }, [searchParams, setSearchParams, converter, converterChanged]);
+
   const toFixed = (number) => {
     if (searchParams.get('accurate') !== 'true') return parseFloat(number.toFixed(3))
     return number;
-  }
+  };
 
   const saveToHistory = (from, to, fromUnit, toUnit) => {
+    if (!from || !to) return;
+
     const now = new Date();
     const result = `${from} ${fromUnit} = ${to} ${toUnit}`;
     const searchParamsLink = `from=${from}&to=${to}&fromUnit=${fromUnit}&toUnit=${toUnit}`;
@@ -105,7 +115,7 @@ function UnitConverter() {
       fromUnit: unit,
       to: result
     });
-    saveToHistory(searchParams.get('fromUnit'), result, unit, searchParams.get('toUnit'));
+    saveToHistory(searchParams.get('from'), result, unit, searchParams.get('toUnit'));
   }
 
   const convertSecondUnit = (text) => {
@@ -162,12 +172,12 @@ function UnitConverter() {
       </div>
 
       <div className="flex space-x-2">
-        <Input value={searchParams.get('from')} onChange={(text) => convertFirstUnit(text)} type="number" placeholder="Enter value ..." />
+        <Input value={searchParams.get('from') || ''} onChange={(text) => convertFirstUnit(text)} type="number" placeholder="Enter value ..." />
         <Dropdown value={searchParams.get('fromUnit')} onChange={(unit) => changeFirstUnit(unit)} options={converters[converter].units} alignRight units />
       </div>
 
       <div className="flex space-x-2">
-        <Input value={searchParams.get('to')} onChange={(text) => convertSecondUnit(text)} type="number" placeholder="Enter value ..." />
+        <Input value={searchParams.get('to') || ''} onChange={(text) => convertSecondUnit(text)} type="number" placeholder="Enter value ..." />
         <Dropdown value={searchParams.get('toUnit')} onChange={(unit) => changeSecondUnit(unit)} options={converters[converter].units} alignRight units />
       </div>
     </div>

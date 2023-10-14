@@ -70,7 +70,7 @@ const converters = {
   time: {
     default: 'S',
     units: [
-      ['DE', 'Decade'], ['Y', 'Year'], ['M', 'Month'], ['Wk', 'Week'], ['D', 'Day'],
+      ['DE', 'Decade'], ['Y', 'Year'], ['M', 'Month'], ['WK', 'Week'], ['D', 'Day'],
       ['H', 'Hour'], ['MIN', 'Minute'], ['S', 'Second'], ['MS', 'Millisecond']
     ],
     rate: {
@@ -89,6 +89,17 @@ const converters = {
       'MA': 0.0009414715, 'KN': 0.5399568035, 'MPH': 0.6213711922,
     }
   },
+  volume: {
+    default: 'M³',
+    units: [
+      ['KM³', 'Cubic kilometer'], ['M³', 'Cubic meter'], ['CM³', 'Cubic sentimeter'], ['MM³', 'Cubic millimeter'],
+      ['L', 'Liter'], ['ML', 'Milliliter'], ['GAL', 'Gallon'], ['QT', 'Quart'], ['PT', 'Pint']
+    ],
+    rate: {
+      'KM³': 1.E-9, 'M³': 1, 'CM³': 1000000, 'MM³': 1000000000,
+      'L': 1000, 'ML': 1000000, 'GAL': 219.9692483, 'QT': 879.8769932, 'PT': 1759.7539864,
+    }
+  },
   data: {
     default: 'GB',
     units: [
@@ -98,17 +109,6 @@ const converters = {
     rate: {
       'B': 1e+9, 'KB': 1e+6,
       'MB': 1000, 'GB': 1, 'TB': 0.001, 'PB': 1e-6,
-    }
-  },
-  voltage: {
-    default: 'V',
-    units: [
-      ['GV', 'Gigavolts'], ['MV', 'Megavolts'], ['KV', 'Kilovolts'],
-      ['V', 'Volts'], ['mV', 'Millivolts'], ['STV', 'Statvolts'], ['ABV', 'Abvolts']
-    ],
-    rate: {
-      'GV': 1.0E-9, 'MV': 1.0E-6, 'KV': 0.001,
-      'V': 1, 'mV': 1000, 'STV': 0.003336, 'ABV': 100000000,
     }
   }
 };
