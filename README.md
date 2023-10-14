@@ -8,9 +8,9 @@ You can convert over 30 currencies, make historical conversions, and view conver
 
 ## Application demo
 
-<img src="github-images/currency-converter.png" alt="Currency converter" width="600">
+<img src="github-images/currency-converter.png" alt="Currency converter" width="800">
 
-<img src="github-images/unit-converter.png" alt="Unit converter" width="600">
+<img src="github-images/unit-converter.png" alt="Unit converter" width="800">
 
 ## Installation
 

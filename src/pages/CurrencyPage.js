@@ -96,7 +96,7 @@ function CurrencyPage() {
     <div className={pageClass}>
       <div className="hidden md:block md:shadow-lg md:shadow-neutral-2 md:h-4 md:-mt-4 md:dark:hidden"></div>
       <div className="p-4 rounded-2xl shadow-md md:w-full md:py-10 md:shadow-none dark:bg-neutral-dark-2 dark:shadow-neutral-dark-3">
-        <p className="-mx-4 mb-5 pb-2 text-lg text-center font-bold border-b-[1.5px] border-neutral-2">
+        <p className="-mx-4 mb-5 pb-2 text-lg text-center font-bold border-b-[1.5px] border-neutral-2 dark:text-neutral-2">
           {(searchParams.has('amount')) ?
             result : <span className="text-neutral-3">Currency not converted</span>}
         </p>
